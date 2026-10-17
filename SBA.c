@@ -925,7 +925,7 @@ int inventoryMenu(char passwordFileName[], Invoice *customerInfo, Supplier *supp
 
     char inventoryFileName[50];                                                         // holds space for the chosen inventory 
     static int validEntries;                                                            // static variables ---> retain state until next boot
-    int invalidEntries, inventoryOption, exitCode = 0;
+    int invalidEntries = 0, inventoryOption, exitCode = 0;
 
     /* GET A VALID INVENTORY MENU OPTION */
     do 
@@ -1356,8 +1356,9 @@ int makeInventoryHeader(char inventoryFileName[], int inventoryOption, FILE *inv
 {    
     char buffer[MAX_RECORD_SIZE];                                  
     int exitCode = 0, i;
+    buffer[0] = '\0';                        // initialze buffer before checking
 
-    inventoryFile = fopen(inventoryFileName, "r+");
+    inventoryFile = fopen(inventoryFileName, "a+");
     if ((exitCode = fileError(inventoryFileName, inventoryFile)))
     {
         return exitCode;
